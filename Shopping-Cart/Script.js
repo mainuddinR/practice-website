@@ -51,9 +51,6 @@ document.getElementById('minusCase').addEventListener('click', function () {
         document.getElementById('casePrice').innerText = array[1];
     }
 
-
-
-
 });
 
 function getQuantity(id) {
@@ -85,55 +82,41 @@ function plusOperation(item, price) {
 }
 
 document.getElementById('remove-item1').addEventListener('dblclick', function () {
-
-    let array = getTotalCost('totalItemPrice', 'tax', 'totalCost', 'phonePrice');
-
-    document.getElementById('totalItemPrice').innerText = array[0];
-    document.getElementById('totalCost').innerText = array[1];
-
+    let itemPrice = getInnerTextValue('phonePrice');
+     minusOperationCostCalculate(itemPrice);
     document.getElementById('card1').style.display = "none";
 });
+
 document.getElementById('remove-item2').addEventListener('dblclick', function () {
-    let array = getTotalCost('totalItemPrice', 'tax', 'totalCost', 'casePrice');
-
-    document.getElementById('totalItemPrice').innerText = array[0];
-    document.getElementById('totalCost').innerText = array[1];
-
+    let itemPrice = getInnerTextValue('casePrice');
+    minusOperationCostCalculate(itemPrice);
     document.getElementById('card2').style.display = "none";
 });
 
-function getTotalCost(subtotal, taxId, total, price) {
-    let itemPrice = getInnerTextValue(price);
-    let totalItemPrice = getInnerTextValue(subtotal);
-    let tax = getInnerTextValue(taxId);
-    let cost = getInnerTextValue(total);
-    totalItemPrice = totalItemPrice - itemPrice;
-    cost = cost - itemPrice;
-    let array = [totalItemPrice, cost];
-    return array;
-}
 function minusOperationCostCalculate(itemPrice) {
-    let totalItemPrice = getInnerTextValue('totalItemPrice');
-    let tax = getInnerTextValue('tax');
-    let cost = getInnerTextValue('totalCost');
-    totalItemPrice = totalItemPrice - itemPrice;
-    cost = cost - itemPrice;
-    document.getElementById('totalItemPrice').innerText = totalItemPrice;
-    document.getElementById('totalCost').innerText = cost;
-    document.getElementById('tax').innerText = tax;
+    let array = getCurrentCost();
+    array[0] = array[0] - itemPrice;
+    array[2] = array[2] - itemPrice;
+    setNewCost(array);
 }
 
 function plusOperationCostCalculate(itemPrice) {
+    let array = getCurrentCost();
+    array[0] = array[0] + itemPrice;
+    array[2] = array[2] + itemPrice;
+    setNewCost(array);
+}
+
+function getCurrentCost() {
     let totalItemPrice = getInnerTextValue('totalItemPrice');
     let tax = getInnerTextValue('tax');
     let cost = getInnerTextValue('totalCost');
+    return array = [totalItemPrice, tax, cost];
+}
 
-    totalItemPrice = totalItemPrice + itemPrice;
-    cost = cost + itemPrice;
-
-    document.getElementById('totalItemPrice').innerText = totalItemPrice;
-    document.getElementById('totalCost').innerText = cost;
-    document.getElementById('tax').innerText = tax;
-
+function setNewCost(array) {
+    document.getElementById('totalItemPrice').innerText = array[0];
+    document.getElementById('totalCost').innerText = array[2];
+    document.getElementById('tax').innerText = array[1];
 }
 
