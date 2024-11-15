@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="input" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="Search" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="place">Dhaka</h1>
+            <h3><span id="temp">38.06</span>&deg;C</h3>
+            <h1 id="C_clouds">Clouds</h1>
+        </div>
+    </div>
+    <script>
+
+        function display(data){
+            document.getElementById('place').innerText=data.name;
+            document.getElementById('temp').innerText=data.main.temp;
+            document.getElementById('C_clouds').innerText=data.weather[0].description;
+        }
+        document.getElementById('Search').addEventListener('click',function(){
+           //let city=document.querySelector('#input');
+           let city =document.getElementById('input').value;
+        //    const city1=city.split(',');
+        //    console.log(city1[0]);
+          // console.log(city1);//https://api.openweathermap.org/data/2.5/weather?q={city name},{country code}&appid={API key}
+            // fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city1[0]},${city1[1]}&units=metric&appid=4c11f29787233d83ace66a2536ca0270`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=4c11f29787233d83ace66a2536ca0270`)
+            .then(rep=>rep.json())
+            .then(data=>
+            //console.log(data)
+             display(data)
+              )
+             .catch(err=>alert('Wrong City name'));
+        });
+ </script>
+<!-- key=4c11f29787233d83ace66a2536ca0270-->
+</body>
+</html>
